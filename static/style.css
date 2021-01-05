@@ -1,0 +1,169 @@
+h1
+{
+    color: rgb(2, 2, 2);
+    text-shadow: 15px 15px 5px rgb(255, 255, 255);
+    font-size: 100px;
+    text-align: center;
+    margin-top: 0px;
+    
+}
+header,body,html
+{
+    width: 100%;
+    height: 80%;
+}
+
+header
+{
+    background: url("/static/image/int_maison.png") no-repeat center center;
+    background-size: cover;
+}
+
+div#content div
+{
+    display: inline-block;
+    width: 48%;
+}
+
+div#content div p{
+    margin: 35px;
+}
+
+
+.bulle1gauche
+{        
+    color: rgb(255, 0, 0);
+    background: url("/static/image/Grandpy-removebg-preview.png") no-repeat;
+    vertical-align: top;
+    border: 3px black solid;
+    margin: 2px 0 3px 1px;
+    height: 450px;
+    text-align: right;
+    width: 48%;
+    font-size: 40px;
+}
+
+.input_adresse
+{
+    color:rgb(255, 0, 0);
+    border: 2px rgb(255, 0, 0) solid;
+    border-radius: 8px;
+}
+
+.bulle1droite
+{
+    color: rgb(255, 0, 0);
+    background: url("/static/image/spirou.jpg") no-repeat;
+    background-size: 50%;
+    background-size: 50%;
+    border: 3px black solid;
+    margin: 2px 0 3px 1px;
+    height: 450px;
+    width: 48%;
+    text-align: right;
+    font-size: 40px;
+}
+
+div.bulle2gauche
+{
+    background: url("/static/image/bulle.png") no-repeat;
+    border: 3px black dotted;
+    margin: 2px 0 3px 1px;
+    height: 450px;
+    width: 48%;
+    display: inline-block;
+}
+
+
+.bulle2droite
+{
+    background: url("/static/image/bulle.png") no-repeat;
+    border: 3px black dotted;
+    margin: 2px 0 3px 1px;
+    height: 450px;
+    width: 48%;
+    display: inline-block;
+}
+
+footer
+{
+    border: 3px black dotted;
+    margin: 2px 0 3px 1px;
+}
+
+/*button*/
+
+.button {
+    background-color: #ff0000;
+    /* Green */
+    border: none;
+    border-radius: 20px;
+    color: black;
+    padding: 8px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.couleur1 {
+    background-color: rgb(87, 87, 87);
+    color: white;
+    border: 1.5px solid rgb(255, 0, 0);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.couleur1:hover {
+    background-color: rgb(182, 177, 177);
+    color: black;
+}
+
+/*SPINNER*/
+
+.gg-spinner {
+    transform: scale(var(--ggs, 2));
+    padding-left: 5%;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+.gg-spinner,
+.gg-spinner::after,
+.gg-spinner::before {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px
+}
+
+.gg-spinner::after,
+.gg-spinner::before {
+    content: "";
+    position: absolute;
+    border-radius: 100px
+}
+
+
+.gg-spinner::before {
+    animation: spinner 1s cubic-bezier(.6, 0, .4, 1) infinite;
+    border: 3px solid transparent;
+    border-top-color: currentColor
+}
+
+.gg-spinner::after {
+    border: 3px solid;
+    opacity: .2
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(359deg)
+    }
+}
