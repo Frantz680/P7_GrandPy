@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/static/style.css" />
-    <title>GrandPy</title>
+    <link rel="icon" type="image/gif" href="/static/image/Logo-spirou.png" sizes="16x16">
     <script type="text/javascript" src="/static/script.js"></script>
+    <title>GrandPy</title>
 </head>
 
 <body>
@@ -31,16 +32,21 @@
         </div>
 
         <div class="bulle1droite">
-            <p>Votre réponse</p>
-            <p>
-                Adresse : <input class="input_adresse" type="text" style="width:30%" id="valeur_reponse_user" value="">
-                <button class="button couleur1" onclick="text_user()">Valider</button>
-            </p>
-            <p>
-                <span id="erreur">
+            <div class="chat">
+                <div class="papy">
+                    <img src="/static/image/Grand-Papy_Spirou.png" alt="Avatar_papy">
+                    <p>Demande moi l'adresse de ton choix, je te montrerais sur ma carte et je te raconterai une histoire,
+                    si j'en ai une a te raconter</p>
+                </div>
+                
+                <input class="input_adresse" type="text" style="width:30%" id="str_user" value=""
+                        placeholder="Pose ta question ici..."></p>
+                
+                    <span id="erreur">
 
-                </span>
-            </p>
+                    </span>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -67,7 +73,7 @@
             que GrandPy te plaira.<br />
             <a href="https://github.com/Frantz680?tab=overview&from=2020-10-01&to=2020-10-31">Lien vers mon Github
                 <img src="/static/image/icone_github.png" height="50" width="100">
-            </a> &
+            </a>&
             <a href="https://www.linkedin.com/in/françois-dubois-543a0b177"> Lien vers mon Linkedin
                 <img src="/static/image/icone_linkedin.png" height="50" width="120">
             </a>
