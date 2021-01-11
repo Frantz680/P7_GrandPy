@@ -1,6 +1,7 @@
 //-----------------Variable Global-----------------
 
 var text = ["SALUT", "BONJOUR", "HEY", "COUCOU"]
+var salutation = ["SALUT", "BONJOUR", "HEY", "COUCOU", "BONSOIR", "HELLO", "HI", ]
 var random = getRandomInt(0, text.length - 1)
 
 //-----------------Differentes Fonctions-----------------
@@ -22,11 +23,12 @@ window.onload = function () {
             //alert(string_user.length)
             if (input.value.length <= 3) {
                 document.getElementById("erreur").innerHTML = "Tapez autre chose"
+
             }
             else {
                 //Envoie de la requete
                 spinner.style.display = "block";
-                request_ajax(response_request_string_user)
+                request_ajax(response_request_string_user)                
             }
         }
 
@@ -38,7 +40,7 @@ window.onload = function () {
         console.log(input.value);
     }
 
-
+//-----------------Function AJAX-----------------
 
     function request_ajax(callback) {
     //Fonction assynchrone

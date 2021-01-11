@@ -8,6 +8,10 @@ h1
     
 }
 
+body
+{
+    margin: 0%;
+}
 
 /*HEADER*/
 
@@ -19,26 +23,20 @@ header
     height: 490px;
 }
 
-
-div#content div
-{
-    display: inline-block;
-    width: 48%;
-}
-
 /*BUBBLE 1 LEFT*/
 
 .bulle1gauche
 {        
     color: rgb(255, 0, 0);
     background: url("/static/image/Grandpy-removebg-preview.png") no-repeat;
+    background-position: left;
     vertical-align: top;
     border: 3px black solid;
-    margin: 2px 0 3px 1px;
     height: 450px;
     text-align: right;
-    width: 48%;
+    width: 49%;
     font-size: 40px;
+    display: inline-block;
 }
 
 /*BUBBLE 1 RIGHT*/
@@ -49,12 +47,50 @@ div#content div
     background: url("/static/image/spirou.jpg") no-repeat;
     background-position: right;
     background-size: 50%;
-    background-size: 50%;
     border: 3px black solid;
-    margin: 2px 0 3px 1px;
     height: 450px;
-    width: 48%;
+    width: 49%;
     font-size: 40px;
+    display: inline-block;
+}
+
+/*BUBBLE 1 RIGHT + CHAT*/
+
+.input_adresse
+{
+    color:rgb(255, 0, 0);
+    border: 2px rgb(255, 0, 0) solid;
+    border-radius: 8px;
+    padding: 0.85vw;
+    position: relative;
+
+}
+
+.chat {
+    width: 50%;
+    height: 350px;
+    z-index: 10;
+    box-shadow: 0 5px 30px  rgba(255, 0, 0, 0.5);
+    background: rgba(255, 0, 0, 0.5);
+    background: transparent;
+    border-radius: 20px;
+
+}
+
+.chat2 {
+    width: 100%;
+    height: 400px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 20px;
+    overflow: auto;
+}
+
+/*BUBBLE 1 RIGHT + USER AND PAPY*/
+
+.user {
+    background-color: darkorange;
+    text-align: right;
+    width: 70%;
 }
 
 .papy
@@ -76,43 +112,14 @@ div#content div
     border-radius: 50%;
 }
 
-.input_adresse
-{
-    color:rgb(255, 0, 0);
-    border: 2px rgb(255, 0, 0) solid;
-    border-radius: 8px;
-    padding: 0.85vw;
-    display:auto ;
-    position: relative;
-    top: 230px;
-}
-
-.chat {
-    width: 98%;
-    height: calc(100% - 15px);
-    max-height: 95%;
-    z-index: 10;
-    overflow: hidden;
-    box-shadow: 0 5px 30px  rgba(255, 0, 0, 0.5);
-    background: rgba(255, 0, 0, 0.5);
-    background: transparent;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-  }
-
 /*BUBBLE 2 LEFT*/
 
 div.bulle2gauche
 {
     background: url("/static/image/bulle.png") no-repeat;
     border: 3px black dotted;
-    margin: 2px 0 3px 1px;
     height: 450px;
-    width: 48%;
+    width: 49%;
     display: inline-block;
 }
 
