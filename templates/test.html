@@ -37,7 +37,7 @@
                     <p class="papy"><img src="/static/image/Grand-Papy_Spirou.png" alt="Avatar_papy">Demande moi l'adresse de ton choix, je te montrerais sur ma carte et je te raconterai une histoire,
                     si j'en ai une a te raconter</p>
                 </div>
-                <input class="input_adresse" type="text" style="width:30%" onchange="myFunction()" id="str_user" value=""
+                <input class="input_adresse" type="text" style="width:30%" id="str_user" value=""
                         placeholder="Pose ta question ici...">
 
             </div>
@@ -72,20 +72,4 @@
         </p>
     </footer>
 </body>
-
-<script>
-    function myFunction() {
-        let para = document.createElement("P");
-        para.className = "user"
-        para.innerHTML = "This is a paragraph.";
-        document.getElementById("chat2").appendChild(para);
-
-        let bot = document.createElement("P");
-        bot.className = "papy"
-        bot.innerHTML = "response";
-        document.getElementById("chat2").appendChild(bot);
-
-    }
-</script>
-
 </html>
