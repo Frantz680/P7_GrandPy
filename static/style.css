@@ -17,8 +17,11 @@ body
 
 header
 {
-    background: url("/static/image/int_maison.png") no-repeat center center;
-    background-size: cover;
+    background:  url("/static/image/famille_spirou.png"), url("/static/image/int_maison.png");
+    background-repeat: no-repeat, no-repeat;
+    background-position: 85% 10%, center;
+    background-size: contain, cover;
+    background-color: blanchedalmond;
     width: auto;
     height: 490px;
 }
@@ -68,7 +71,7 @@ header
 
 .chat {
     width: 50%;
-    height: 350px;
+    height: 300px;
     z-index: 10;
     box-shadow: 0 5px 30px  rgba(255, 0, 0, 0.5);
     background: rgba(255, 0, 0, 0.5);
@@ -79,37 +82,56 @@ header
 
 .chat2 {
     width: 100%;
-    height: 400px;
+    height: 390px;
     background-color: rgb(255, 0, 0);
     border-radius: 20px;
     overflow: auto;
 }
 
-/*BUBBLE 1 RIGHT + USER AND PAPY*/
+/*BUBBLE 1 RIGHT + USER, BOT_PAPY AND BOT_MAMAN*/
 
 .user {
-    background-color: darkorange;
+    font-size: 18px;
+    border: 2px solid #dedede;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
     text-align: right;
-    width: 70%;
+    padding: 10px;
 }
 
-.papy
-{
+.user img{
+
+
+}
+
+.papy{
     font-size: 18px;
     border: 2px solid #dedede;
     background-color: #f1f1f1;
     border-radius: 5px;
+    text-align: left;
     padding: 10px;
     margin: 10px 0;
+    width: 70%;
 }
 
 .papy img{
-
     float: left;
     max-width: 60px;
     width: 100%;
     margin-right: 20px;
     border-radius: 50%;
+}
+
+.bot_maman{
+    font-size: 18px;
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    text-align: left;
+    padding: 10px;
+    margin: 10px 0;
+    width: 70%;
 }
 
 /*BUBBLE 2 LEFT*/
