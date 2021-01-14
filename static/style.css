@@ -30,6 +30,7 @@ header
 
 .bulle1gauche
 {        
+    box-sizing: border-box;
     color: rgb(255, 0, 0);
     background: url("/static/image/Grandpy-removebg-preview.png") no-repeat;
     background-position: left;
@@ -46,6 +47,7 @@ header
 
 .bulle1droite
 {
+    box-sizing: border-box;
     color: rgb(255, 0, 0);
     background: url("/static/image/spirou.jpg") no-repeat;
     background-position: right;
@@ -94,21 +96,28 @@ header
     font-size: 18px;
     border: 2px solid #dedede;
     background-color: rgb(255, 255, 255);
-    border-radius: 5px;
+    border-radius: 20px;
     text-align: right;
     padding: 10px;
+    width: 70%;
+    position: relative;
+    left: 20%;
 }
 
 .user img{
-
-
+    float: right;
+    max-width: 40px;
+    position: relative;
+    top: -8px; left: 10px;
+    margin-right: 10px;
+    border-radius: 60%;
 }
 
 .papy{
     font-size: 18px;
     border: 2px solid #dedede;
     background-color: #f1f1f1;
-    border-radius: 5px;
+    border-radius: 20px;
     text-align: left;
     padding: 10px;
     margin: 10px 0;
@@ -117,21 +126,29 @@ header
 
 .papy img{
     float: left;
-    max-width: 60px;
+    max-width: 40px;
     width: 100%;
     margin-right: 20px;
-    border-radius: 50%;
+    border-radius: 60%;
 }
 
 .bot_maman{
     font-size: 18px;
     border: 2px solid #dedede;
     background-color: #f1f1f1;
-    border-radius: 5px;
+    border-radius: 20px;
     text-align: left;
     padding: 10px;
     margin: 10px 0;
     width: 70%;
+}
+
+.bot_maman img{
+    float: left;
+    max-width: 30px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 60%;
 }
 
 /*BUBBLE 2 LEFT*/
