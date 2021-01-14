@@ -2,13 +2,6 @@
 
 var salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
 var salutation_mini = []
-var stop_word = [".", ",", "!", "?", ";", ":", "'", "d'", "l'", "j'", "t'","je", "j'ai", "tu", "il", "elle", "nous", "vous", "ils", "elles", ,"le", "les", "du", "que", "grandpy", "est-ce", "connais"]
-var key_word = ["adresse", "localisation", "position", "lieu", "ladresse"]
-var key_word_kurz = ["a", "à", "de", "sur", "la"]
-var question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux tu connaitre ?", "Ou veux tu allez ?"]
-var response_negative_bot = ["Je suis sourd, j'ai pas compris", "Pardon, mon petit j'ai pas compris", "Peut tu repeter stp"]
-var gronder = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
-var mot_interdit = ["con", "connard", "salope", "salope", "pd"]
 var random = getRandomInt(0, salutation.length - 1)
 var input = ""
 var last_scrollheight = 0
