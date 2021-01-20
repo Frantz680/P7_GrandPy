@@ -22,7 +22,7 @@ var key_word = []
 
 //---------On additionne tous les tableaux ensembles pour le parse ---------
 
-var remove_word = verbe.concat(pronom, mot, ponctuation, alphabet);
+var tbl_remove_word = verbe.concat(pronom, mot, ponctuation, alphabet);
 
 
 //-----------------Differentes Fonctions-----------------
@@ -31,23 +31,23 @@ var remove_word = verbe.concat(pronom, mot, ponctuation, alphabet);
 
 function print_user() {
     let para = document.createElement("P");
-    para.className = "user"
+    para.className = "user";
     para.innerHTML = '<img src="/static/image/spirou-chat.jpg" alt="Avatar_user"></img>' + input.value;
     document.getElementById("chat2").appendChild(para);
 }
 
 function print_papy(reponse) {
     let bot = document.createElement("P");
-    bot.className = "papy"
+    bot.className = "papy";
     bot.innerHTML = '<img src="/static/image/Grand-Papy_Spirou.png" alt="Avatar_papy"></img>' + reponse;
-    bot.id = "id_papy"
-    document.getElementById("chat2").appendChild(bot)
+    bot.id = "id_papy";
+    document.getElementById("chat2").appendChild(bot);
 
 }
 
 function print_maman(reponse_maman) {
     let bot_maman = document.createElement("P");
-    bot_maman.className = "bot_maman"
+    bot_maman.className = "bot_maman";
     bot_maman.innerHTML = '<img src="/static/image/maman_Spirou.png" alt="Avatar_maman"></img>' + reponse_maman;
     document.getElementById("chat2").appendChild(bot_maman);
 
@@ -56,14 +56,69 @@ function print_maman(reponse_maman) {
 //---------Parse---------
 
 function parse_str_user() {
+
     if (input.value.length <= 2) {
         print_papy("Je n'arrive pas à comprendre");
         return true;
     }
 
+    input.value = transform_mini(input.value);
+    console.log("input.value", input.value)
 
-    // on met toute les char en minuscule
-    mini_input_value = input.value.toLowerCase();
+    input.value = remove_ponctuation(input.value);
+    console.log("input.value2", input.value);
+
+    key_word = create_tableau(input.value);
+    console.log("key_word", key_word);
+
+    key_word = remove_word(key_word, tbl_remove_word);
+    console.log("key_word2", key_word);
+
+    console.log("new input value", new_input_value);
+
+    if (parse_mot_interdit(key_word)) {
+        random = getRandomInt(0, gronder.length - 1);
+        print_maman(gronder[random]);
+        return true;
+    }
+
+
+    if (parse_salutation(key_word)) {
+
+        random = getRandomInt(0, salutation.length - 1);
+        print_papy(salutation[random]);
+        // si la string fait moins que 3 mot alors on return
+        if (key_word.length < 3) {
+            random = getRandomInt(0, question_bot.length - 1);
+            print_papy(question_bot[random]);
+            return true;
+        }
+    }
+
+    key_word = remove_word(key_word, salutation_mini);
+
+    print_papy("envoi serveur " + String(key_word));
+
+    /*random = getRandomInt(0, response_negative_bot.length);
+    print_papy(response_negative_bot[random])
+    return true;*/
+
+}
+
+function parse_salutation(param) {
+    // si un mot de saluation est présent dans la pharse le bot salut
+
+    for (let index = 0; index < salutation_mini.length; index++) {
+
+        if (param.includes(salutation_mini[index])) {
+            // if (new_input_value == salutation_mini[index]){
+            return true;
+        }
+
+    }
+
+
+}
 
     /*for (let index = 0; index < mot_interdit.length; index++) {
 
@@ -76,103 +131,57 @@ function parse_str_user() {
 
         }*/
 
-    // on remplace les ' par un espace 
-    for (let index = 0; index < ponctuation.length; index++) {
-        mini_input_value = mini_input_value.replaceAll(ponctuation[index], " ");
+function parse_mot_interdit(param) {
+    // si un mot interdit est présent dans la pharse la maman repond
+
+    for (let index = 0; index < mot_interdit.length; index++) {
+
+        if (param.includes(mot_interdit[index])) {
+            // if (new_input_value == salutation_mini[index]){
+            return true;
+        }
 
     }
 
-    console.log(mini_input_value);
-    // on créer un tableau avec notre chaine de caractere
-    tbl_mini_input_value = mini_input_value.split(" ");
-    console.log(tbl_mini_input_value);
 
+}
+
+function transform_mini(param) {
+    // on met toute les char en minuscule
+    return param.toLowerCase();
+}
+
+function remove_ponctuation(param) {
+    // on remplace la ponctuation par un espace 
+    for (let index = 0; index < ponctuation.length; index++) {
+        param = param.replaceAll(ponctuation[index], " ");
+    }
+    return param;
+}
+
+function create_tableau(param) {
+    // on créer un tableau avec notre chaine de caractere
+    return param.split(" ");
+}
+
+function remove_word(p_key_word, p_remove_word) {
     // On remplace(supprimer) tout les mots inutiles dans notre tableau 
-    for (let index = 0; index < tbl_mini_input_value.length; index++) {
-        for (let index_remove = 0; index_remove < remove_word.length; index_remove++) {
-            if (tbl_mini_input_value[index] == remove_word[index_remove]) {
-                tbl_mini_input_value[index] = tbl_mini_input_value[index].replace(remove_word[index_remove], "");
+    for (let index = 0; index < p_key_word.length; index++) {
+        for (let index_remove = 0; index_remove < p_remove_word.length; index_remove++) {
+            if (p_key_word[index] == p_remove_word[index_remove]) {
+                p_key_word[index] = p_key_word[index].replace(p_remove_word[index_remove], "");
             }
         }
     }
-
-    console.log("tbl_mini_input_value remove = ", tbl_mini_input_value)
 
     // On ajoute les mots dans un nouveau tableau mais pas les "" 
-    new_input_value = []
-    for (let index = 0; index < tbl_mini_input_value.length; index++) {
-        if (tbl_mini_input_value[index] != "") {
-            new_input_value.push(tbl_mini_input_value[index]);
+    new_input_value = [];
+    for (let index = 0; index < p_key_word.length; index++) {
+        if (p_key_word[index] != "") {
+            new_input_value.push(p_key_word[index]);
         }
     }
 
-    console.log("new input value", new_input_value);
-
-    if (parse_salutation()) {
-        return true;
-
-    }
-
-    if (parse_localisation()) {
-        return false;
-    }
-
-    random = getRandomInt(0, response_negative_bot.length);
-    print_papy(response_negative_bot[random])
-    return true;
-
+    return new_input_value;
 }
 
-function parse_salutation() {
-    // si un mot de saluation est présent dans la pharse le bot salut
-
-    for (let index = 0; index < salutation.length; index++) {
-
-        if (new_input_value.includes(salutation_mini[index])) {
-            // if (new_input_value == salutation_mini[index]){
-            random = getRandomInt(0, salutation.length - 1);
-            print_papy(salutation[random]);
-            console.log(new_input_value.length)
-            // si la string fait moins que 3 mot alors on return
-            if (new_input_value.length < 2) {
-                random = getRandomInt(0, question_bot.length - 1);
-                print_papy(question_bot[random]);
-                return true;
-            }
-
-        }
-
-
-    }
-    return false
-}
-
-
-function parse_localisation() {
-
-    // On remplace(supprimer) tout les mots de salutations par des ""
-    for (let index = 0; index < new_input_value.length; index++) {
-        for (let index_salutation = 0; index_salutation < salutation_mini.length; index_salutation++) {
-            if (new_input_value[index] == salutation_mini[index_salutation]) {
-                new_input_value[index] = new_input_value[index].replace(salutation_mini[index_salutation], "");
-
-                // On créer un tableau sans les ""
-                for (let index = 0; index < new_input_value.length; index++) {
-                    if (new_input_value[index] != "") {
-                        key_word.push(new_input_value[index]);
-
-                        // On envoi les mots importants au serveur
-                        if (new_input_value.length == index + 1) {
-                            print_papy("envoi serveur " + String(key_word));
-                            return true;
-                        }
-                    }
-                }
-
-            }
-
-        }
-
-    }
-    return false;
-}   
