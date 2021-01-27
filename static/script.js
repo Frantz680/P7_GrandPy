@@ -1,3 +1,5 @@
+import Chat_bot from './chat_bot.py';
+
 //-----------------Variable Global-----------------
 
 var salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
@@ -33,7 +35,7 @@ window.onload = function () {
         if (event.keyCode === 13) {
             print_user();
 
-            if (parse_str_user()) {
+            if (Chat_bot.parse_str_user()) {
                 // si la fonction parse nous retourne un True on sort de la fonction event
                 return;
 
@@ -44,47 +46,34 @@ window.onload = function () {
 
             //Envoie de la requete
             spinner.style.display = "block";
-            request_ajax(response_request_string_user)
 
         }
-
-        
-
     });
-
-    function response_request_string_user() {
-
-        spinner.style.display = "none";
-        console.log(input.value);
-    }
-
-
-    //-----------------Function AJAX-----------------
-
-    function request_ajax(callback) {
-
-
-        var xhttp = new XMLHttpRequest();
-
-        xhttp.onreadystatechange = function () {
-            //Fonction assynchrone
-            if (this.readyState == 4 && this.status == 200) {
-                //var rep_json = JSON.parse(this.response);
-                callback()
-            }
-        };
-
-        xhttp.open("POST", "/reponse_user", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("fname=Henry&lname=Ford");
-    }
-
-    setInterval(function() {
-        var scroll = document.getElementById("chat2");
-        if (scroll.scrollHeight != last_scrollheight) {
-            last_scrollheight = scroll.scrollHeight;
-            scroll.scrollTop = scroll.scrollHeight;
-        }
-    }, 200);
+    
 }
 
+//---------Creation d'element HTML---------
+
+function print_user() {
+    let para = document.createElement("P");
+    para.className = "user";
+    para.innerHTML = '<img src="/static/image/spirou-chat.jpg" alt="Avatar_user"></img>' + input.value;
+    document.getElementById("chat2").appendChild(para);
+}
+
+function print_papy(reponse) {
+    let bot = document.createElement("P");
+    bot.className = "papy";
+    bot.innerHTML = '<img src="/static/image/Grand-Papy_Spirou.png" alt="Avatar_papy"></img>' + reponse;
+    bot.id = "id_papy";
+    document.getElementById("chat2").appendChild(bot);
+
+}
+
+function print_maman(reponse_maman) {
+    let bot_maman = document.createElement("P");
+    bot_maman.className = "bot_maman";
+    bot_maman.innerHTML = '<img src="/static/image/maman_Spirou.png" alt="Avatar_maman"></img>' + reponse_maman;
+    document.getElementById("chat2").appendChild(bot_maman);
+
+}

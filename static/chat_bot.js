@@ -87,17 +87,12 @@ function parse_str_user() {
 
         random = getRandomInt(0, salutation.length - 1);
         print_papy(salutation[random]);
-        // si la string fait moins que 3 mot alors on return
-        if (key_word.length < 3) {
-            random = getRandomInt(0, question_bot.length - 1);
-            print_papy(question_bot[random]);
-            return true;
-        }
     }
 
     key_word = remove_word(key_word, salutation_mini);
 
     print_papy("envoi serveur " + String(key_word));
+    request_ajax(String(key_word), response_server);
 
     /*random = getRandomInt(0, response_negative_bot.length);
     print_papy(response_negative_bot[random])
@@ -184,4 +179,40 @@ function remove_word(p_key_word, p_remove_word) {
 
     return new_input_value;
 }
+
+function response_server(response) {
+
+    print_papy("envoi serveur " + String(response));
+}
+
+//-----------------Function AJAX-----------------
+
+function request_ajax(param_send,callback) {
+
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        //Fonction assynchrone
+        if (this.readyState == 4 && this.status == 200) {
+            callback(this.response)
+        } 
+        else if (this.readyState == 4 && this.status == 500) {
+            print_papy("Désole je n'ai pas d'histoire te raconter");
+        }
+        
+    };
+
+    xhttp.open("POST", "/key_word_user", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("param_send=" + param_send);
+}
+
+setInterval(function() {
+    var scroll = document.getElementById("chat2");
+    if (scroll.scrollHeight != last_scrollheight) {
+        last_scrollheight = scroll.scrollHeight;
+        scroll.scrollTop = scroll.scrollHeight;
+    }
+}, 200);
 
