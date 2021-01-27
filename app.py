@@ -12,7 +12,7 @@ def call_google_maps(lieu):
     url_maps = "https://maps.googleapis.com/maps/api/geocode/json"
     params_maps = {
         "address": lieu,
-        "key": "AIzaSyCF1uKf0Zy5Z0tCX3cPuZIaG1EFoS-ua0o"
+        "key": ""
         } 
     reponse_maps = json.loads(requests.get(url=url_maps, params=params_maps).text)
 
