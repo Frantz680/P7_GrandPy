@@ -1,5 +1,3 @@
-import Chat_bot from './chat_bot.py';
-
 //-----------------Variable Global-----------------
 
 var salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
@@ -34,16 +32,8 @@ window.onload = function () {
 
         if (event.keyCode === 13) {
             print_user();
-
-            if (Chat_bot.parse_str_user()) {
-                // si la fonction parse nous retourne un True on sort de la fonction event
-                return;
-
-            }
             print_papy("Un instant stp je te repond de suite");
-
-            
-
+            request_ajax("str_user", input.value, print_papy);
             //Envoie de la requete
             spinner.style.display = "block";
 
@@ -51,6 +41,44 @@ window.onload = function () {
     });
     
 }
+
+//-----------------Function AJAX-----------------
+
+function request_ajax(name_resquest, param_send, callback) {
+    /*
+    La fonction ajax sert à échanger des données avec un serveur.
+    name_resquest = le nom de la requete
+    param_send = la valeur qu'on envoi au serveur
+    callback = on rappel la fonction quand on recoit la reponse
+    */
+
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        //Fonction assynchrone
+        if (this.readyState == 4 && this.status == 200) {
+            callback(this.response)
+        } 
+        else if (this.readyState == 4 && this.status == 500) {
+            print_papy("Désole je n'ai pas d'histoire te raconter");
+        }
+        
+    };
+
+    xhttp.open("POST", name_resquest, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("param_send=" + param_send);
+}
+
+setInterval(function() {
+    var scroll = document.getElementById("chat2");
+    if (scroll.scrollHeight != last_scrollheight) {
+        last_scrollheight = scroll.scrollHeight;
+        scroll.scrollTop = scroll.scrollHeight;
+    }
+}, 200);
+
 
 //---------Creation d'element HTML---------
 
@@ -70,10 +98,10 @@ function print_papy(reponse) {
 
 }
 
-function print_maman(reponse_maman) {
+/*function print_maman(reponse_maman) {
     let bot_maman = document.createElement("P");
     bot_maman.className = "bot_maman";
     bot_maman.innerHTML = '<img src="/static/image/maman_Spirou.png" alt="Avatar_maman"></img>' + reponse_maman;
     document.getElementById("chat2").appendChild(bot_maman);
 
-}
+}*/

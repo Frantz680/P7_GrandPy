@@ -153,24 +153,12 @@ header
 
 /*BUBBLE 2 LEFT*/
 
-div.bulle2gauche
+div.bulle2maps
 {
-    background: url("/static/image/bulle.png") no-repeat;
-    border: 3px black dotted;
+    
+    border: 2px solid rgb(212, 212, 212) dotted;
     height: 450px;
-    width: 49%;
-    display: inline-block;
-}
-
-/*BUBBLE 2 RIGHT*/
-
-.bulle2droite
-{
-    background: url("/static/image/bulle.png") no-repeat;
-    border: 3px black dotted;
-    margin: 2px 0 3px 1px;
-    height: 450px;
-    width: 48%;
+    width: 99%;
     display: inline-block;
 }
 
