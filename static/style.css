@@ -43,6 +43,11 @@ header
     display: inline-block;
 }
 
+.bulle1gauche p
+{
+    margin: 0%;
+}
+
 /*BUBBLE 1 RIGHT*/
 
 .bulle1droite
@@ -132,7 +137,7 @@ header
     border-radius: 60%;
 }
 
-.bot_maman{
+.maman{
     font-size: 18px;
     border: 2px solid #dedede;
     background-color: #f1f1f1;
@@ -143,7 +148,7 @@ header
     width: 70%;
 }
 
-.bot_maman img{
+.maman img{
     float: left;
     max-width: 30px;
     width: 100%;
