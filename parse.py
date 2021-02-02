@@ -3,7 +3,7 @@ Salut grandpy! Comment s'est passé ta soirée avec Grandma hier soir? Au fait, 
 Bonsoir Grandpy, j'espère que tu as passé une belle semaine. Est-ce que tu pourrais m'indiquer l'adresse de la tour eiffel? Merci d'avance et salutations à Mamie.
 Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?"""
 
-
+import json
 import random
    
 class Parse:
@@ -26,6 +26,8 @@ class Parse:
         self.tbl_mini_input_value = []
         self.key_word = []
         self.salutation_mini = []
+        self.erreur = {'erreur': 'False'}
+        self.salutation_dict = {'salutation': 'False'}
         self.random = random.choice(self.salutation)
 
         #---------On additionne tous les tableaux ensembles pour le parse ---------
@@ -33,7 +35,8 @@ class Parse:
         self.tbl_remove_word = self.verbe + self.pronom + self.mot + self.ponctuation + self.alphabet
 
     def parse_str_user(self, value_input):
-
+        self.salutation_dict = {'salutation': 'False'}
+        self.erreur = {'erreur': 'False'}
         for index in range (0, len(self.salutation), 1):
             self.salutation_mini.append(self.salutation[index].lower())
         
@@ -53,8 +56,20 @@ class Parse:
         #papy ne comprend pas en dessous de deux mots
         if (len(self.key_word) <= 2):
                 
-            print("Je n'arrive pas à comprendre")
-            return True
+            self.erreur = {'erreur': 'True'}
+            
+            self.salutation_dict = self.parse_salutation(self.key_word)
+            print("SALUT",self.salutation_dict)
+
+            if self.salutation_dict['salutation'] == 'True':
+                self.erreur.update(self.salutation_dict)
+                print(self.erreur)
+                return json.dumps(self.erreur)
+
+            else:
+                self.erreur.update(self.salutation_dict)
+                print(self.erreur)
+                return json.dumps(self.erreur)
 
         self.key_word = self.remove_word(self.key_word, self.tbl_remove_word)
         #console.log("key_word2", key_word)
@@ -62,9 +77,9 @@ class Parse:
         #console.log("new input value", new_input_value)
 
         if self.parse_mot_interdit(self.key_word):
-            random = random.choice(self.gronder)
             #print(self.gronder[random])
-            return True
+            print("GRONDER")
+            return 
         
 
 
@@ -80,19 +95,24 @@ class Parse:
             #return True
 
         self.key_word = self.remove_word(self.key_word, self.salutation_mini)
-
-        return self.key_word
+        # On ajout le dictionnaire api au mots clés
+        self.key_word = dict({'key_word': self.key_word})
+        api = {'erreur': 'False', 'api': 'True', 'salutation': 'True'}
+        y = api.update(self.key_word)
+        return json.dumps(api)
 
     def parse_salutation(self, param):
     # si un mot de saluation est présent dans la pharse le bot salut
 
         for index in range (0, len(self.salutation_mini), 1):
-            for index_param in range (0,len(param), 1):
+            for index_param in range (0, len(param), 1):
                 if self.salutation_mini[index] == param[index_param]:
                     # if (new_input_value == salutation_mini[index])
-                    #print("SALUTATION")
-                    return True
-        
+                    self.salutation_dict = {"salutation": "True"}
+                    return self.salutation_dict
+
+        return self.salutation_dict
+                
     """for (let index = 0; index < mot_interdit.length; index++) {
 
         if (mini_input_value.includes(mot_interdit[index])) {
@@ -112,7 +132,8 @@ class Parse:
 
                 if self.mot_interdit[index] == param[index_param]:
                     #if (new_input_value == salutation_mini[index])
-                    return True
+                    gronder = {"gronder": "True"}
+                    return gronder
         
     def transform_mini(self, param):
     # on met toute les char en minuscule
