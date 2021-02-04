@@ -43,43 +43,44 @@ window.onload = function () {
     });
     
 }
-
-/*function initmaps() {
-    const map = new google.maps.Map(document.getElementById("maps"), {
-      center: { lat: Math.random(), lng: Math.random() },
-      zoom: 8,
-      mapTypeId: "satellite",
-    });
-    map.setTilt(45);
-}*/
   
-function api_maps(location){
+//-----------------API JS Google Maps-----------------
+
+function api_maps(location, adresse){
     let script = document.createElement("script");
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCVpEx_0aIjh-DX_6YhKStsYwGEGoK2lyQ&callback=initmaps";
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyChZyqQKTyt4r4GEXd9csdM7qUNXu5QT2A&callback=initmaps";
     script.defer = true;
     console.log(location)
     window.initmaps = function() {
         const map = new google.maps.Map(document.getElementById("maps"), {
-          center: location,
-          zoom: 15,
-          mapTypeId: "satellite",
+            center: location,
+            zoom: 15,
+            mapTypeId: "satellite",
         });
+        new google.maps.Marker({
+            position: location,
+            map,
+            title: adresse,
+          });
         map.setTilt(45);
     }
     document.getElementById("maps").appendChild(script);
 }
 
+//-----------------Fonction Callback-----------------
+
 function callback_json(p_response) {
     spinner.style.display = "none"
-    response_json = JSON.parse(p_response)
-    console.log(response_json.erreur)
+    response_json = JSON.parse(p_response);
+    console.log(response_json);
+    console.log(response_json.salutation);
 
     if (response_json.salutation == "True") {
-        print_papy("Bonjour mon grand.")
+        print_papy("Bonjour mon grand.");
     }
 
-    if (response_json.erreur == "True") {
-        print_papy("Je ne comprend pas ce que tu veux me demander.")
+    if (response_json.insulte == "True") {
+        print_papy("OH!");
     }
 
     if (response_json.api == "True") {
@@ -87,12 +88,13 @@ function callback_json(p_response) {
         console.log("response_json_wiki: ", response_json.wiki)
         console.log(response_json.adresse)
         console.log(response_json.location)*/
-        print_papy("Voici l'adresse que j'ai trouvez sur ce lieu :\n" + response_json.adresse)
-        print_papy("Je vais te racontez ma petite histoire sur ce lieu\n" + response_json.wiki)
-        api_maps(response_json.location)
+        print_papy("Voici l'adresse que j'ai trouvez sur ce lieu :\n" + response_json.adresse);
+        print_papy("Je vais te racontez ma petite histoire sur ce lieu\n" + response_json.wiki);
+        api_maps(response_json.location, response_json.adresse);
     }
-    
+   
 }
+
 //-----------------Function AJAX-----------------
 
 function request_ajax(name_resquest, param_send, callback) {

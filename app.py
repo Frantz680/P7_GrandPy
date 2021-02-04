@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 app = Flask(__name__)
-import requests
 import json
 from parse import Parse
 from api import Api
@@ -16,58 +15,51 @@ def reponse_user():
         key_word = request.form['param_send']
         #print(key_word)
         parse_word = json.loads(parse_key_word.parse_str_user(key_word))
-        #print("APP python", parse_word)
+        print("APP python", parse_word)
         #print("ERREUR", parse_word['erreur'])
         #print(parse_word['key_word'])
 
-        if parse_word['erreur'] == 'True':
+        if parse_word['insulte'] == 'True':
 
             if parse_word['salutation'] == 'True':
-                return json.dumps(parse_word)
+
+                if parse_word['api'] == 'True':
+                    return api_envoi_reponse(parse_word)
 
             else:   
-                return json.dumps(parse_word)
+                return parse_word
 
         elif parse_word['salutation'] == 'True':
-           
-            if parse_word['api'] == 'True':
-                #print("parsseee", parse_word)
-                response_maps = json.loads(response_api_maps(parse_word['key_word']))
-                response_wiki = response_api_wiki(parse_word['key_word'])
-                #print(response_maps + response_wiki)
-                #On return du JSON
-                #print(response_maps)
-                #print("ENVOImaps", response_maps, "ENVOImaps", response_wiki) 
-                #print( json.dumps({"maps": response_maps, "wiki" : response_wiki}))
-                print(response_maps)
-                print(json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"], "wiki" : response_wiki, "erreur" : parse_word["erreur"]}))
-                return json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"], "wiki" : response_wiki, "erreur" : parse_word["erreur"], "api" : parse_word["api"]})
-
-            else:
-                return json.dumps(parse_word)
-
-        elif parse_word['api'] == 'True':
-                #print("parsseee", parse_word)
-                response_maps = json.loads(response_api_maps(parse_word['key_word']))
-                response_wiki = response_api_wiki(parse_word['key_word'])
-                #print(response_maps + response_wiki)
-                #On return du JSON
-                #print(response_maps)
-                #print("ENVOImaps", response_maps, "ENVOImaps", response_wiki) 
-                #print( json.dumps({"maps": response_maps, "wiki" : response_wiki}))
-                print(response_maps)
-                print(json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"], "wiki" : response_wiki}))
-                return json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"], "wiki" : response_wiki})
-
             
+            if parse_word['api'] == 'True':
+                return api_envoi_reponse(parse_word)
 
+            return parse_word
+
+        else:   
+            return parse_word
+
+def api_envoi_reponse(parse_word):            
+    #print("parsseee", parse_word)
+    response_maps = json.loads(response_api_maps(parse_word['key_word']))
+    response_wiki = response_api_wiki(parse_word['key_word'])
+    #print(response_maps + response_wiki)
+    #On return du JSON
+    #print(response_maps)
+    #print("ENVOImaps", response_maps, "ENVOImaps", response_wiki) 
+    #print( json.dumps({"maps": response_maps, "wiki" : response_wiki}))
+    #print(response_maps)
+    #print(json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"],\
+    #"wiki" : response_wiki, "insulte" : parse_word["insulte"]}))
+    return json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"],\
+        "wiki" : response_wiki, "insulte" : parse_word["insulte"], "salutation" : parse_word["salutation"], "api" : parse_word["api"]})
 
 
 
 def response_api_maps(parse_word):
     params_maps = {
         "address": str(parse_word),
-        "key": "AIzaSyCVpEx_0aIjh-DX_6YhKStsYwGEGoK2lyQ"
+        "key": "AIzaSyChZyqQKTyt4r4GEXd9csdM7qUNXu5QT2A"
     }
 
     response_maps = maps.request_api(params_maps)
@@ -111,10 +103,8 @@ def response_api_wiki(parse_word):
 if __name__ == '__main__':
     parse_key_word = Parse()
 
-    wiki = Api("https://fr.wikipedia.org/w/api.php")
-    maps = Api("https://maps.googleapis.com/maps/api/geocode/json")
-    
+    wiki  =  Api ( "https://fr.wikipedia.org/w/api.php" )
+    maps  =  Api ( "https://maps.googleapis.com/maps/api/geocode/json" )
 
     app.run()
     
-
