@@ -18,7 +18,7 @@ class Parse:
         self.alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"]
         self.question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux tu connaitre ?", "Ou veux tu allez ?"]
         self.gronder = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
-        self.mot_interdit = ["con", "connard", "salope", "salope", "pd"]
+        self.insulte = ["con", "connard", "salope", "pute", "pd"]
         self.response_negative_bot = ["Je suis sourd, j'ai pas compris", "Pardon, mon petit j'ai pas compris", "Peut tu repeter stp"]
         self.mini_input_value = ""
         self.input_value_important_word = ""
@@ -26,8 +26,10 @@ class Parse:
         self.tbl_mini_input_value = []
         self.key_word = []
         self.salutation_mini = []
-        self.erreur = {'erreur': 'False'}
-        self.salutation_dict = {'salutation': 'False'}
+        self.status_salutation = {'salutation': 'False'}
+        self.status_insulte = {'insulte': 'False'}
+        self.status_api = {'api': 'False'}
+        self.status = {}
         self.random = random.choice(self.salutation)
 
         #---------On additionne tous les tableaux ensembles pour le parse ---------
@@ -35,71 +37,84 @@ class Parse:
         self.tbl_remove_word = self.verbe + self.pronom + self.mot + self.ponctuation + self.alphabet
 
     def parse_str_user(self, value_input):
-        self.salutation_dict = {'salutation': 'False'}
-        self.erreur = {'erreur': 'False'}
+
+        self.status_salutation = {'salutation': 'False'}
+        self.status_insulte = {'insulte': 'False'}
+        self.status_api = {'api': 'False'}
+
         for index in range (0, len(self.salutation), 1):
             self.salutation_mini.append(self.salutation[index].lower())
-        
-        #print("SALUTATION MINI", self.salutation_mini)
- 
+
+        print(value_input)
+        print(self.key_word)
+
+        #On met tout les charactere en minuscules
         value_input = self.transform_mini(value_input)
-        #console.log("input.value", input.value)
             
+        #On supprime les ponctuations
         value_input = self.remove_ponctuation(value_input)
-        #console.log("input.value2", input.value)
 
+        #On crée un tableau
         self.key_word = self.create_tableau(value_input)
-        #console.log("key_word", key_word)
+        print("keyword tableau", self.key_word)
 
-        #print("Longueur",len(self.key_word))
-        #print(self.key_word)
-        #papy ne comprend pas en dessous de deux mots
-        if (len(self.key_word) <= 2):
-                
-            self.erreur = {'erreur': 'True'}
-            
-            self.salutation_dict = self.parse_salutation(self.key_word)
-            print("SALUT",self.salutation_dict)
+        #On regarde dans la chaine si il y a un mot de salutation, si oui on returne un True
+        self.status_salutation = self.parse_salutation(self.key_word)
 
-            if self.salutation_dict['salutation'] == 'True':
-                self.erreur.update(self.salutation_dict)
-                print(self.erreur)
-                return json.dumps(self.erreur)
+        #On supprime les mots de salutation
+        self.key_word = self.remove_word(self.key_word, self.salutation_mini)
 
-            else:
-                self.erreur.update(self.salutation_dict)
-                print(self.erreur)
-                return json.dumps(self.erreur)
+        #On regarde dans la chaine si il y a un mot d'insulte, si oui on returne un True
+        self.status_insulte = self.parse_mot_insulte(self.key_word)
 
+        #On supprime les mots d'insultes
+        self.key_word = self.remove_word(self.key_word, self.insulte)
+
+        #On supprime les mots restants
         self.key_word = self.remove_word(self.key_word, self.tbl_remove_word)
-        #console.log("key_word2", key_word)
 
-        #console.log("new input value", new_input_value)
+        #On additionne les status salutation et insulte ensemble
+        self.status.update(self.status_salutation)
+        self.status.update(self.status_insulte)
+        print(self.status)
 
-        if self.parse_mot_interdit(self.key_word):
-            #print(self.gronder[random])
-            print("GRONDER")
-            return 
+        print(self.key_word)
+
+        #On regarde dans la chaine si il y a plus que un mot, si oui on return un True
+        self.status_api = self.parse_api(self.key_word)
+
+        #On ajoute le status api aux autres status
+        self.status.update(self.status_api)
+
+        print(self.status)
+
+        return json.dumps(self.status)
+    
+    def parse_api(self, param):
         
 
+        if (len(param) < 2):
+            print("LONGUEUR",len(param))
+            self.status_api = {'api': 'False'}
 
-        #if self.parse_salutation(self.key_word):
-            #random = random.choice(self.salutation)
-            #self.print_papy(self.salutation[random])
+            #On converti les mots clés en dictionnaire
+            self.key_word = dict({'key_word': 'Nothing'})
 
-        #self.print_papy("envoi serveur " + str(key_word))
-        #request_ajax(str(key_word), response_server)
+            #On ajoute les status au mots clés
+            self.status.update(self.key_word) 
+            return self.status_api
+            
+        else:
+            print("LONGUEUR",len(param))
+            self.status_api = {'api': 'True'}
 
-        #random = getRandomInt(0, response_negative_bot.length)
-        #print_papy(response_negative_bot[random])
-            #return True
+            #On converti les mots clés en dictionnaire
+            self.key_word = dict({'key_word': self.key_word})
 
-        self.key_word = self.remove_word(self.key_word, self.salutation_mini)
-        # On ajout le dictionnaire api au mots clés
-        self.key_word = dict({'key_word': self.key_word})
-        api = {'erreur': 'False', 'api': 'True', 'salutation': 'True'}
-        y = api.update(self.key_word)
-        return json.dumps(api)
+            #On ajoute les status au mots clés
+            self.status.update(self.key_word) 
+            return self.status_api
+            
 
     def parse_salutation(self, param):
     # si un mot de saluation est présent dans la pharse le bot salut
@@ -108,32 +123,24 @@ class Parse:
             for index_param in range (0, len(param), 1):
                 if self.salutation_mini[index] == param[index_param]:
                     # if (new_input_value == salutation_mini[index])
-                    self.salutation_dict = {"salutation": "True"}
-                    return self.salutation_dict
+                    self.status_salutation = {"salutation": "True"}
+                    return self.status_salutation
 
-        return self.salutation_dict
+        return self.status_salutation
                 
-    """for (let index = 0; index < mot_interdit.length; index++) {
 
-        if (mini_input_value.includes(mot_interdit[index])) {
-            // if (mini_input_value == salutation_mini[index]){
-            random = getRandomInt(0, gronder.length - 1);
-            print_maman(gronder[random]);
-            return true;
-            }"""
-
-    
-
-    def parse_mot_interdit(self, param):
+    def parse_mot_insulte(self, param):
     # si un mot interdit est présent dans la pharse la maman repond
 
-        for index in range (0, len(self.mot_interdit), 1):
+        for index in range (0, len(self.insulte), 1):
             for index_param in range (0, len(param), 1):
 
-                if self.mot_interdit[index] == param[index_param]:
+                if self.insulte[index] == param[index_param]:
                     #if (new_input_value == salutation_mini[index])
-                    gronder = {"gronder": "True"}
-                    return gronder
+                    self.status_insulte = {"insulte": "True"}
+                    return self.status_insulte
+
+        return self.status_insulte
         
     def transform_mini(self, param):
     # on met toute les char en minuscule

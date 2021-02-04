@@ -20,7 +20,7 @@ class Api:
         """
         We build the instance of the class.
         """
-
+        
         self.url_api = p_url
 
 
