@@ -34,9 +34,11 @@ def reponse_user():
         if parse_word['insulte'] == 'True':
 
             if parse_word['salutation'] == 'True':
-
+                
                 if parse_word['api'] == 'True':
                     return api_envoi_reponse(parse_word)
+
+                return api_envoi_reponse(parse_word)
 
             else:
                 return parse_word
@@ -67,12 +69,12 @@ def api_envoi_reponse(parse_word):
     #print(response_maps)
     #print("ENVOImaps", response_maps, "ENVOImaps", response_wiki)
     #print( json.dumps({"maps": response_maps, "wiki" : response_wiki}))
-    #print(response_maps)
+    print(response_maps)
     #print(json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"],\
     #"wiki" : response_wiki, "insulte" : parse_word["insulte"]}))
     return json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"],\
         "wiki": response_wiki, "insulte": parse_word["insulte"], "salutation": parse_word["salutation"],\
-                       "api": parse_word["api"]})
+        "api": parse_word["api"], "key_api": response_maps["key_api"]})
 
 
 if __name__ == '__main__':

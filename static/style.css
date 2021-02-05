@@ -137,7 +137,7 @@ header
     border-radius: 60%;
 }
 
-.maman{
+.bot_maman{
     font-size: 18px;
     border: 2px solid #dedede;
     background-color: #f1f1f1;
@@ -148,9 +148,9 @@ header
     width: 70%;
 }
 
-.maman img{
+.bot_maman img{
     float: left;
-    max-width: 30px;
+    max-width: 40px;
     width: 100%;
     margin-right: 20px;
     border-radius: 60%;

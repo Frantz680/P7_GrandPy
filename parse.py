@@ -110,8 +110,8 @@ class Parse:
         :param param: Valeur du input de l'utilisateur
         :return: status de l'api True ou False
         """
-        
-        if len(param) < 2:
+
+        if len(param) <= 2:
             print("LONGUEUR", len(param))
             self.status_api = {'api': 'False'}
 
