@@ -1,16 +1,19 @@
+
+
 //-----------------Variable Global-----------------
 
 var salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
+var gronder = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
+var question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux tu connaitre ?", "Ou veux tu allez ?"]
 var salutation_mini = []
 var random = getRandomInt(0, salutation.length - 1)
 var input = ""
 var last_scrollheight = 0
-var url_maps = "https://maps.googleapis.com/maps/api/js"
+var url_maps = "https://maps.googleapis.com/maps/api/js?"
 var spinner = document.getElementById("spinner")
 
 for (let index = 0; index < salutation.length; index++) {
     salutation_mini[index] = salutation[index].toLowerCase();
-
 }
 
 
@@ -46,9 +49,9 @@ window.onload = function () {
   
 //-----------------API JS Google Maps-----------------
 
-function api_maps(location, adresse){
+function api_maps(location, adresse, key){
     let script = document.createElement("script");
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAm-6JMAnaWFCiAnEQAw3KYCtLGo3SQzA8&callback=initmaps";
+    script.src = url_maps + "key=" + key + "&callback=initmaps";
     script.defer = true;
     console.log(location)
     window.initmaps = function() {
@@ -76,11 +79,18 @@ function callback_json(p_response) {
     console.log(response_json.salutation);
 
     if (response_json.salutation == "True") {
-        print_papy("Bonjour mon grand.");
+        random = getRandomInt(0, salutation.length);
+        print_papy(salutation[random]);
+
+        if (response_json.api == "False"){
+            random = getRandomInt(0, question_bot.length );
+            print_papy(question_bot[random]);
+        }
     }
 
     if (response_json.insulte == "True") {
-        print_papy("OH!");
+        random = getRandomInt(0, gronder.length);
+        print_maman(gronder[random]);
     }
 
     if (response_json.api == "True") {
@@ -90,7 +100,7 @@ function callback_json(p_response) {
         console.log(response_json.location)*/
         print_papy("Voici l'adresse que j'ai trouvez sur ce lieu :\n" + response_json.adresse);
         print_papy("Je vais te racontez ma petite histoire sur ce lieu\n" + response_json.wiki);
-        api_maps(response_json.location, response_json.adresse);
+        api_maps(response_json.location, response_json.adresse, response_json.key_api);
     }
    
 }
@@ -151,10 +161,10 @@ function print_papy(reponse) {
 
 }
 
-/*function print_maman(reponse_maman) {
+function print_maman(reponse_maman) {
     let bot_maman = document.createElement("P");
     bot_maman.className = "bot_maman";
     bot_maman.innerHTML = '<img src="/static/image/maman_Spirou.png" alt="Avatar_maman"></img>' + reponse_maman;
     document.getElementById("chat2").appendChild(bot_maman);
 
-}*/
+}

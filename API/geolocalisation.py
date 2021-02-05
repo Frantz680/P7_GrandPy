@@ -2,11 +2,15 @@
 API GOOGLE Geocoding
 """
 
-import json
+import json, os
+from os.path import join, dirname
+from dotenv import load_dotenv
+
 from API.api import Api
 
 """
-Import the module json
+Import the module json, os
+
 Import different class.
 """
 
@@ -31,10 +35,16 @@ class Geolocalisation:
         :param parse_word: Les mots clés recuperer après le parse
         :return: On retourne les valeurs recuperer de l'api en JSON
         """
+
+        dotenv_path = join(dirname(__file__), '.env')
+        load_dotenv(dotenv_path)
+
+        key = os.getenv('KEY')
+
         print(str(parse_word))
         params_maps = {
             "address": str(parse_word),
-            "key": "AIzaSyAm-6JMAnaWFCiAnEQAw3KYCtLGo3SQzA8"
+            "key": key
         }
 
         response_maps = self.maps.request_api(params_maps)
@@ -44,4 +54,4 @@ class Geolocalisation:
         maps_location = response_maps["results"][0]["geometry"]["location"]
         #print("maps_adress", maps_adress)
         #print("maps_location", maps_location)
-        return json.dumps({"adresse_maps": maps_adress, "location_maps": maps_location})
+        return json.dumps({"adresse_maps": maps_adress, "location_maps": maps_location, "key_api": key})
