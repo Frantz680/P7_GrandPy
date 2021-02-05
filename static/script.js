@@ -48,7 +48,7 @@ window.onload = function () {
 
 function api_maps(location, adresse){
     let script = document.createElement("script");
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyChZyqQKTyt4r4GEXd9csdM7qUNXu5QT2A&callback=initmaps";
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAm-6JMAnaWFCiAnEQAw3KYCtLGo3SQzA8&callback=initmaps";
     script.defer = true;
     console.log(location)
     window.initmaps = function() {
