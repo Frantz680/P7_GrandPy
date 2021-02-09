@@ -50,8 +50,8 @@ class Geolocalisation:
         response_maps = self.maps.request_api(params_maps)
         print("response_maps", response_maps)
         print("results", response_maps["results"])
-        maps_adress = response_maps["results"][0]["formatted_address"]
+        maps_address = response_maps["results"][0]["formatted_address"]
         maps_location = response_maps["results"][0]["geometry"]["location"]
-        #print("maps_adress", maps_adress)
+        #print("maps_address", maps_address)
         #print("maps_location", maps_location)
-        return json.dumps({"adresse_maps": maps_adress, "location_maps": maps_location, "key_api": key})
+        return json.dumps({"maps_address": maps_address, "location_maps": maps_location, "key_api": key})

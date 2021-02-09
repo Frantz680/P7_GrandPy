@@ -39,10 +39,9 @@ class Wikipedia:
             "format": "json"
         }
         
-        reponse_wiki_location = self.wiki.request_api(params_wiki_location)
+        response_wiki_location = self.wiki.request_api(params_wiki_location)
 
-        for page in reponse_wiki_location["query"]["search"]:
-            #print(page["pageid"])
+        for page in response_wiki_location["query"]["search"]:
             page_wiki = page["pageid"]
             break
 
