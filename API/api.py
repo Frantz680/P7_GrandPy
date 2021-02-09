@@ -12,7 +12,7 @@ url_wikimedia = "https://en.wikimedia.org/w/api.php?action=query&format=json&sea
 
 url_wikimedia = "https://www.mediawiki.org/w/api.php?action=opensearch&format=json&search=tour_eiffel&limit=100&namespace=0"
 
-url_maps = "https://maps.googleapis.com/maps/api/geocode/json&address=openclassrooms&key=AIzaSyAm-6JMAnaWFCiAnEQAw3KYCtLGo3SQzA8"
+url_maps = "https://maps.googleapis.com/maps/api/geocode/json&address=openclassrooms&key="
 """
 
 
