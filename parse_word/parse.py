@@ -21,14 +21,14 @@ class Parse:
         """
 
         self.salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
-        self.verbe = ["suis", "as", "es", "est", "sommes", "etes", "êtes", "fait", "passé", "ai", "indiquer", "avons", "avez", "ont", "avoir", "etre", "être", "indique", "indiques", "indiquons", "indiquez", "indiquent", "voir", "vois", "voit", "voyons", "voyez", "voient", "penser", "pense", "penses", "pensons", "pensez", "pensent", "pouvoir", "peux", "peut", "pouvons", "pouvez", "peuvent", "pourrais", "pourras", "pourra", "pourrons", "pourrez", "pourront", "trouver", "trouve", "trouves", "trouvons", "trouvez", "trouvent", "connaitre", "connaître", "connais", "connait", "connaît", "connaissons", "connaissez", "connaissent", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy",]
-        self.pronom = ["d'", "je", "j'", "l'", "la", "à", "tu", "et", "de", "ta", "il", "elle", "on", "nous", "vous", "ils", "se", "elles", "me", "te", "le", "les", "lui", "leur", "qu'", "quoi", "qui", "que", "ou", "où", "ce", "cela", "s'", "un", "une", "-"]
-        self.mot = ["grandpy", "grandma", "mamie", "espère", "adresse", "avance", "papy", "hier", "avec", "soir", "plait", "plaît", "comment", "pendant", "au", "belle", "beau", "nuit", "soiree", "soire", "soirée", "soiré", "semaine", "merci", "salutations", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy",]
-        self.ponctuation = [".", ",", "!", "?", ";", ":", " ", "'", "-"]
+        self.verb = ["suis", "as", "es", "est", "sommes", "etes", "êtes", "fait", "passé", "ai", "indiquer", "avons", "avez", "ont", "avoir", "etre", "être", "indique", "indiques", "indiquons", "indiquez", "indiquent", "voir", "vois", "voit", "voyons", "voyez", "voient", "penser", "pense", "penses", "pensons", "pensez", "pensent", "pouvoir", "peux", "peut", "pouvons", "pouvez", "peuvent", "pourrais", "pourras", "pourra", "pourrons", "pourrez", "pourront", "trouver", "trouve", "trouves", "trouvons", "trouvez", "trouvent", "connaitre", "connaître", "connais", "connait", "connaît", "connaissons", "connaissez", "connaissent", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy",]
+        self.pronoun = ["d'", "je", "j'", "l'", "la", "à", "tu", "et", "de", "ta", "il", "elle", "on", "nous", "vous", "ils", "se", "elles", "me", "te", "le", "les", "lui", "leur", "qu'", "quoi", "qui", "que", "ou", "où", "ce", "cela", "s'", "un", "une", "-"]
+        self.word = ["grandpy", "grandma", "mamie", "espère", "adresse", "avance", "papy", "hier", "avec", "soir", "plait", "plaît", "comment", "pendant", "au", "belle", "beau", "nuit", "soiree", "soire", "soirée", "soiré", "semaine", "merci", "salutations", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy", "grandpy",]
+        self.punctuation = [".", ",", "!", "?", ";", ":", " ", "'", "-"]
         self.alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"]
         self.question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux tu connaitre ?", "Ou veux tu allez ?"]
-        self.gronder = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
-        self.insulte = ["con", "connard", "salope", "pute", "pd"]
+        self.scold = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
+        self.insult = ["con", "connard", "salope", "pute", "pd"]
         self.response_negative_bot = ["Je suis sourd, j'ai pas compris", "Pardon, mon petit j'ai pas compris", "Peut tu repeter stp"]
         self.mini_input_value = ""
         self.input_value_important_word = ""
@@ -37,13 +37,13 @@ class Parse:
         self.key_word = []
         self.salutation_mini = []
         self.status_salutation = {'salutation': 'False'}
-        self.status_insulte = {'insulte': 'False'}
+        self.status_insult = {'insult': 'False'}
         self.status_api = {'api': 'False'}
         self.status = {}
 
         """---------On additionne tous les tableaux ensembles pour le parse ---------"""
 
-        self.tbl_remove_word = self.verbe + self.pronom + self.mot + self.ponctuation + self.alphabet
+        self.tbl_remove_word = self.verb + self.pronoun + self.word + self.punctuation + self.alphabet
 
     def parse_str_user(self, value_input):
         """
@@ -53,7 +53,7 @@ class Parse:
         """
 
         self.status_salutation = {'salutation': 'False'}
-        self.status_insulte = {'insulte': 'False'}
+        self.status_insult = {'insult': 'False'}
         self.status_api = {'api': 'False'}
 
         for index in range(0, len(self.salutation), 1):
@@ -66,10 +66,10 @@ class Parse:
         value_input = self.transform_mini(value_input)
             
         """On supprime les ponctuations"""
-        value_input = self.remove_ponctuation(value_input)
+        value_input = self.remove_punctuation(value_input)
 
         """On crée un tableau"""
-        value_input_tbl = self.create_tableau(value_input)
+        value_input_tbl = self.create_array(value_input)
         print("keyword tableau", len(value_input_tbl))
 
         """On regarde dans la chaine si il y a un mot de salutation, si oui on returne un True"""
@@ -79,17 +79,17 @@ class Parse:
         self.key_word = self.remove_word(value_input_tbl, self.salutation_mini)
 
         """On regarde dans la chaine si il y a un mot d'insulte, si oui on returne un True"""
-        self.status_insulte = self.parse_mot_insulte(self.key_word)
+        self.status_insult = self.parse_word_insult(self.key_word)
 
         """On supprime les mots d'insultes"""
-        self.key_word = self.remove_word(self.key_word, self.insulte)
+        self.key_word = self.remove_word(self.key_word, self.insult)
 
         """On supprime les mots restants"""
         self.key_word = self.remove_word(self.key_word, self.tbl_remove_word)
 
         """On additionne les status salutation et insulte ensemble"""
         self.status.update(self.status_salutation)
-        self.status.update(self.status_insulte)
+        self.status.update(self.status_insult)
         print(self.status)
 
         print(self.key_word)
@@ -149,24 +149,25 @@ class Parse:
 
         return self.status_salutation
 
-    def parse_mot_insulte(self, param):
+    def parse_word_insult(self, param):
         """
         Permet de savoir si la maman va dire quelque chose ou non.
         :param param: Valeur du input de l'utilisateur.
         :return: status de insulte True ou False.
         """
 
-        for index in range (0, len(self.insulte), 1):
+        for index in range (0, len(self.insult), 1):
             for index_param in range (0, len(param), 1):
 
-                if self.insulte[index] == param[index_param]:
-                    #if (new_input_value == salutation_mini[index])
-                    self.status_insulte = {"insulte": "True"}
-                    return self.status_insulte
+                if self.insult[index] == param[index_param]:
+                    # if (new_input_value == salutation_mini[index])
+                    self.status_insult = {"insult": "True"}
+                    return self.status_insult
 
-        return self.status_insulte
+        return self.status_insult
         
-    def transform_mini(self, param):
+    @staticmethod
+    def transform_mini(param):
         """
         Permet de mettre tout les char en minuscule.
         :param param: Valeur du input de l'utilisateur.
@@ -175,20 +176,21 @@ class Parse:
 
         return param.lower()
 
-    def remove_ponctuation(self, param):
+    def remove_punctuation(self, param):
         """
         Permet de remplacer la ponctuation par un espace.
         :param param: Valeur du input de l'utilisateur.
         :return: Valeur du input sans ponctuation de l'utilisateur.
         """
 
-        for index in range(0, len(self.ponctuation), 1):
+        for index in range(0, len(self.punctuation), 1):
 
-            param = param.replace(self.ponctuation[index], " ")
+            param = param.replace(self.punctuation[index], " ")
     
         return param
 
-    def create_tableau(self, param):
+    @staticmethod
+    def create_array(param):
         """
         On créer un tableau avec notre chaine de charactere de l'utilisateur.
         :param param: Valeur du input de l'utilisateur.
@@ -197,7 +199,8 @@ class Parse:
 
         return param.split(" ")
 
-    def remove_word(self, p_key_word, p_remove_word):
+    @staticmethod
+    def remove_word(p_key_word, p_remove_word):
         """
         On remplace tout les mots inutiles par des ""
         :param p_key_word: Valeur du input de l'utilisateur.

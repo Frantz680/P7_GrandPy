@@ -3,7 +3,7 @@
 //-----------------Variable Global-----------------
 
 var salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
-var gronder = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
+var scold = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
 var question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux tu connaitre ?", "Ou veux tu allez ?"]
 var salutation_mini = []
 var random = getRandomInt(0, salutation.length - 1)
@@ -88,9 +88,9 @@ function callback_json(p_response) {
         }
     }
 
-    if (response_json.insulte == "True") {
-        random = getRandomInt(0, gronder.length);
-        print_maman(gronder[random]);
+    if (response_json.insult == "True") {
+        random = getRandomInt(0, scold.length);
+        print_maman(scold[random]);
     }
 
     if (response_json.api == "True") {

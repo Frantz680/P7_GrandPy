@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 import json
 
-from parse import Parse
+from parse_word.parse import Parse
 from API.geolocalisation import Geolocalisation
 from API.wikipedia import Wikipedia
 
@@ -22,7 +22,7 @@ def index():
 
 
 @app.route('/str_user', methods=['POST'])
-def reponse_user():
+def response_user():
     if request.method == 'POST':
         key_word = request.form['param_send']
         #print(key_word)
@@ -31,14 +31,14 @@ def reponse_user():
         #print("ERREUR", parse_word['erreur'])
         #print(parse_word['key_word'])
 
-        if parse_word['insulte'] == 'True':
+        if parse_word['insult'] == 'True':
 
             if parse_word['salutation'] == 'True':
                 
                 if parse_word['api'] == 'True':
-                    return api_envoi_reponse(parse_word)
+                    return api_sending_response(parse_word)
 
-                return api_envoi_reponse(parse_word)
+                return api_sending_response(parse_word)
 
             else:
                 return parse_word
@@ -46,7 +46,7 @@ def reponse_user():
         elif parse_word['salutation'] == 'True':
 
             if parse_word['api'] == 'True':
-                return api_envoi_reponse(parse_word)
+                return api_sending_response(parse_word)
 
             return parse_word
 
@@ -54,7 +54,7 @@ def reponse_user():
             return parse_word
 
 
-def api_envoi_reponse(parse_word):
+def api_sending_response(parse_word):
     """
 
     :param parse_word:
@@ -70,16 +70,16 @@ def api_envoi_reponse(parse_word):
     #print("ENVOImaps", response_maps, "ENVOImaps", response_wiki)
     #print( json.dumps({"maps": response_maps, "wiki" : response_wiki}))
     print(response_maps)
-    #print(json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"],\
-    #"wiki" : response_wiki, "insulte" : parse_word["insulte"]}))
-    return json.dumps({"adresse": response_maps["adresse_maps"], "location": response_maps["location_maps"],\
-        "wiki": response_wiki, "insulte": parse_word["insulte"], "salutation": parse_word["salutation"],\
+    #print(json.dumps({"adresse": response_maps["maps_address"], "location": response_maps["location_maps"],\
+    #"wiki" : response_wiki, "insult" : parse_word["insult"]}))
+    return json.dumps({"adresse": response_maps["maps_address"], "location": response_maps["location_maps"],\
+        "wiki": response_wiki, "insult": parse_word["insult"], "salutation": parse_word["salutation"],\
         "api": parse_word["api"], "key_api": response_maps["key_api"]})
 
 
 if __name__ == '__main__':
-    parse_key_word = Parse()
 
+    parse_key_word = Parse()
     api_wiki = Wikipedia()
     api_geo = Geolocalisation()
 
