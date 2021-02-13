@@ -1,10 +1,8 @@
-
-
 //-----------------Variable Global-----------------
 
 var salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
-var scold = ["On dit pas des choses comme ça Spirou !", "Je t'ai pas a pris a parler ainsi Spirou !", "Attend que ton père rentre !"]
-var question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux tu connaitre ?", "Ou veux tu allez ?"]
+var scold = ["On ne dit pas des choses comme ça Spirou !", "Je t'ai pas à pris à parler ainsi Spirou !", "Attends que ton père rentre !"]
+var question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux-tu connaitre ?", "Veux-tu connaitre une histoire sur un lieu ?"]
 var salutation_mini = []
 var random = getRandomInt(0, salutation.length - 1)
 var input = ""
@@ -17,7 +15,7 @@ for (let index = 0; index < salutation.length; index++) {
 }
 
 
-//-----------------Differentes Fonctions-----------------
+//-----------------Different Functions-----------------
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -37,7 +35,6 @@ window.onload = function () {
 
         if (event.keyCode === 13) {
             print_user();
-            //print_papy("Un instant stp je te repond de suite");
             request_ajax("str_user", input.value, callback_json);
             //Envoie de la requete
             spinner.style.display = "block";
@@ -46,10 +43,17 @@ window.onload = function () {
     });
     
 }
-  
+
 //-----------------API JS Google Maps-----------------
 
-function api_maps(location, adresse, key){
+function api_maps(location, address, key){
+    /*
+    This function allows me to create the site map.
+    location: location of our research.
+    adress: the address of the place.
+    key: key api google.
+    */
+
     let script = document.createElement("script");
     script.src = url_maps + "key=" + key + "&callback=initmaps";
     script.defer = true;
@@ -63,20 +67,29 @@ function api_maps(location, adresse, key){
         new google.maps.Marker({
             position: location,
             map,
-            title: adresse,
+            title: address,
           });
         map.setTilt(45);
     }
     document.getElementById("maps").appendChild(script);
 }
 
-//-----------------Fonction Callback-----------------
+//-----------------Callback function-----------------
 
 function callback_json(p_response) {
+    /*
+    Recall : A callback is a function passed as an argument to another function
+    This technique allows a function to call another function
+    A callback function can run after another function has finished.
+
+    Once received the response from the server, then we call this function.
+    This function allows us to know if the bot salutes it,
+    if on display the card, if the mother intervenes.
+    p_response : Server response value.
+    */
+
     spinner.style.display = "none"
     response_json = JSON.parse(p_response);
-    console.log(response_json);
-    console.log(response_json.salutation);
 
     if (response_json.salutation == "True") {
         random = getRandomInt(0, salutation.length);
@@ -94,13 +107,9 @@ function callback_json(p_response) {
     }
 
     if (response_json.api == "True") {
-        /*console.log("response json: ", response_json)
-        console.log("response_json_wiki: ", response_json.wiki)
-        console.log(response_json.adresse)
-        console.log(response_json.location)*/
-        print_papy("Voici l'adresse que j'ai trouvez sur ce lieu :\n" + response_json.adresse);
+        print_papy("Voici l'adresse que j'ai trouvez sur ce lieu :\n" + response_json.address);
         print_papy("Je vais te racontez ma petite histoire sur ce lieu\n" + response_json.wiki);
-        api_maps(response_json.location, response_json.adresse, response_json.key_api);
+        api_maps(response_json.location, response_json.address, response_json.key_api);
     }
    
 }
@@ -109,17 +118,16 @@ function callback_json(p_response) {
 
 function request_ajax(name_resquest, param_send, callback) {
     /*
-    La fonction ajax sert à échanger des données avec un serveur.
-    name_resquest = le nom de la requete
-    param_send = la valeur qu'on envoi au serveur
-    callback = on rappel la fonction quand on recoit la reponse
+    The ajax function is used to exchange data with the server.
+    name_resquest = the name of the request.
+    param_send = the value we send to the server.
+    callback = we call back the function when we receive the response.
     */
-
 
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
-        //Fonction assynchrone
+        //Asynchronous function
         if (this.readyState == 4 && this.status == 200) {
             callback(this.response)
         } 
@@ -135,6 +143,11 @@ function request_ajax(name_resquest, param_send, callback) {
 }
 
 setInterval(function() {
+    /*
+    This function allows me to avoid scroll 
+    and does it automatically when there is a message.
+    */
+
     var scroll = document.getElementById("chat2");
     if (scroll.scrollHeight != last_scrollheight) {
         last_scrollheight = scroll.scrollHeight;
@@ -143,28 +156,46 @@ setInterval(function() {
 }, 200);
 
 
-//---------Creation d'element HTML---------
+//---------HTML element creation---------
 
 function print_user() {
+    /*
+    We create an html element with an image of spirou
+    and in this element there is the value
+    of the user.
+    */
+
     let para = document.createElement("P");
     para.className = "user";
     para.innerHTML = '<img src="/static/image/spirou-chat.jpg" alt="Avatar_user"></img>' + input.value;
     document.getElementById("chat2").appendChild(para);
 }
 
-function print_papy(reponse) {
+function print_papy(response) {
+    /*
+    We create an html element with an image of papy spirou
+    and in this element there is the answer of the grandpa.
+    response = the value of grandpa's answer
+    */
+
     let bot = document.createElement("P");
     bot.className = "papy";
-    bot.innerHTML = '<img src="/static/image/Grand-Papy_Spirou.png" alt="Avatar_papy"></img>' + reponse;
+    bot.innerHTML = '<img src="/static/image/Grand-Papy_Spirou.png" alt="Avatar_papy"></img>' + response;
     bot.id = "id_papy";
     document.getElementById("chat2").appendChild(bot);
 
 }
 
-function print_maman(reponse_maman) {
+function print_maman(response_maman) {
+    /*
+    We create an html element with an image of mother spirou
+    and in this element there is the answer of the mother.
+    response = the sentence to show that the mother is not happy
+    */
+
     let bot_maman = document.createElement("P");
     bot_maman.className = "bot_maman";
-    bot_maman.innerHTML = '<img src="/static/image/maman_Spirou.png" alt="Avatar_maman"></img>' + reponse_maman;
+    bot_maman.innerHTML = '<img src="/static/image/maman_spirou_chat.jpg" alt="Avatar_maman"></img>' + response_maman;
     document.getElementById("chat2").appendChild(bot_maman);
 
 }
