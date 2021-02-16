@@ -18,7 +18,7 @@ def index():
     return sends the response to the browser
     """
 
-    return render_template('test.html')
+    return render_template('index.html')
 
 
 @app.route('/str_user', methods=['POST'])
@@ -59,8 +59,6 @@ def response_user():
         else:
             return parse_word
 
-    return None
-
 
 def api_sending_response(parse_word):
     """
@@ -89,4 +87,4 @@ if __name__ == '__main__':
     api_wiki = Wikipedia()
     api_geo = Geolocation()
 
-    app.run()
+    app.run(debug=True)

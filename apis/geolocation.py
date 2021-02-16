@@ -37,15 +37,12 @@ class Geolocation:
 
         key = os.getenv('KEY')
 
-        print(str(parse_word))
         params_maps = {
             "address": str(parse_word),
             "key": key
         }
 
         response_maps = self.maps.request_api(params_maps)
-        print("response_maps", response_maps)
-        print("results", response_maps["results"])
         maps_address = response_maps["results"][0]["formatted_address"]
         maps_location = response_maps["results"][0]["geometry"]["location"]
         return json.dumps({"maps_address": maps_address,
