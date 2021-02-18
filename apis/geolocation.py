@@ -3,12 +3,9 @@ API GOOGLE Geocoding
 """
 
 import json
-import os
-from os.path import join, dirname
-
-from dotenv import load_dotenv
 
 from apis.api import Api
+from env import key_maps
 
 
 class Geolocation:
@@ -32,14 +29,9 @@ class Geolocation:
         :return: We return the values retrieved from the API in JSON.
         """
 
-        dotenv_path = join(dirname(__file__), '.env')
-        load_dotenv(dotenv_path)
-
-        key = os.getenv('KEY')
-
         params_maps = {
             "address": str(parse_word),
-            "key": key
+            "key": key_maps
         }
 
         response_maps = self.maps.request_api(params_maps)
@@ -47,4 +39,4 @@ class Geolocation:
         maps_location = response_maps["results"][0]["geometry"]["location"]
         return json.dumps({"maps_address": maps_address,
                            "location_maps": maps_location,
-                           "key_api": key})
+                           "key_api": key_maps})

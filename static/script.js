@@ -1,7 +1,7 @@
 //-----------------Variable Global-----------------
 
 var salutation = ["Salut", "Bonjour", "Hey", "Coucou", "Bonsoir", "Hello", "Hi"]
-var scold = ["On ne dit pas des choses comme ça Spirou !", "Je t'ai pas à pris à parler ainsi Spirou !", "Attends que ton père rentre !"]
+var scold = ["On ne dit pas des choses comme ça Spirou !", "Je t'ai pas appris à parler ainsi Spirou !", "Attends que ton père rentre !"]
 var question_bot = ["Qu'elle adresse aimerais tu savoir ?", "Quel lieu veux-tu connaitre ?", "Veux-tu connaitre une histoire sur un lieu ?"]
 var salutation_mini = []
 var random = getRandomInt(0, salutation.length - 1)
@@ -33,15 +33,16 @@ window.onload = function () {
         var scroll = document.getElementById("chat2");
         scroll.scrollTop = scroll.scrollHeight;
 
-        if (event.keyCode === 13) {
+        if (event.keyCode == 13) {
             print_user();
             request_ajax("str_user", input.value, callback_json);
-            //Envoie de la requete
+            //Send request
             spinner.style.display = "block";
 
         }
+
     });
-    
+
 }
 
 //-----------------API JS Google Maps-----------------

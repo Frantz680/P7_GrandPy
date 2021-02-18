@@ -30,6 +30,7 @@ def response_user():
     :return: We return an answer.
     """
 
+    parse_key_word = Parse()
     if request.method == 'POST':
 
         key_word = request.form['param_send']
@@ -67,6 +68,9 @@ def api_sending_response(parse_word):
     :return: We send the response from the parse and the APIs to the browser.
     """
 
+    api_wiki = Wikipedia()
+    api_geo = Geolocation()
+
     response_maps = \
         json.loads(api_geo.response_api_maps(parse_word['key_word']))
     response_wiki = \
@@ -83,8 +87,5 @@ def api_sending_response(parse_word):
 
 
 if __name__ == '__main__':
-    parse_key_word = Parse()
-    api_wiki = Wikipedia()
-    api_geo = Geolocation()
 
     app.run(debug=True)
