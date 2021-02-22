@@ -57,6 +57,9 @@ def response_user():
             else:
                 return parse_word
 
+        elif parse_word['api'] == 'True':
+            return api_sending_response(parse_word)
+
         else:
             return parse_word
 

@@ -1,8 +1,12 @@
 """Test Parse"""
 
+
 def test_parse_mock(monkeypatch):
 
-    result = {"salutation": "True", "insult": "False", "key_word": ["openclassrooms"], "api": "True"}
+    result = {
+        "salutation": "True", "insult": "False", "key_word":
+        ["openclassrooms"], "api": "True"
+        }
 
     class MockResponse:
 
