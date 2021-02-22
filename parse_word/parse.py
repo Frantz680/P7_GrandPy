@@ -168,16 +168,6 @@ class Parse:
             self.status.update(self.key_word)
             return self.status_api
 
-        else:
-            self.status_api = {'api': 'False'}
-
-            # We convert the keywords into a dictionary.
-            self.key_word = dict({'key_word': 'Nothing'})
-
-            # We add the statuses to the keywords.
-            self.status.update(self.key_word)
-            return self.status_api
-
     def parse_salutation(self, param):
         """
         Lets know if the grandpa is going to say hello.

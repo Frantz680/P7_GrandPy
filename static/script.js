@@ -32,17 +32,19 @@ window.onload = function () {
 
         var scroll = document.getElementById("chat2");
         scroll.scrollTop = scroll.scrollHeight;
-
+        str_input_user = input.value
+        
         if (event.keyCode == 13) {
+            
+            console.log(str_input_user)
             print_user();
-            request_ajax("str_user", input.value, callback_json);
+            request_ajax("str_user", str_input_user, callback_json);
             //Send request
             spinner.style.display = "block";
-
         }
 
     });
-
+    
 }
 
 //-----------------API JS Google Maps-----------------
@@ -89,6 +91,7 @@ function callback_json(p_response) {
     p_response : Server response value.
     */
 
+    console.log(p_response)
     spinner.style.display = "none"
     response_json = JSON.parse(p_response);
 
